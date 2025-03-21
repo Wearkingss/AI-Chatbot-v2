@@ -18,8 +18,6 @@
     <button id="send">Send</button>
     
     <script>
-        const API_KEY = "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"; // Replace with your OpenAI API key
-        
         document.getElementById("send").addEventListener("click", async function() {
             let input = document.getElementById("userInput").value;
             if (input.trim() === "") return;
@@ -34,20 +32,18 @@
         });
         
         async function getBotResponse(input) {
-            const response = await fetch("https://api.openai.com/v1/chat/completions", {
-                method: "POST",
+            const response = await fetch("https://api.monkedev.com/fun/chat", {
+                method: "GET",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${API_KEY}`
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    model: "gpt-3.5-turbo", // You can use a different model if available
-                    messages: [{ role: "user", content: input }]
+                    msg: input
                 })
             });
             
             const data = await response.json();
-            return data.choices[0]?.message?.content || "Sorry, I couldn't process that.";
+            return data.response || "Sorry, I couldn't process that.";
         }
     </script>
 </body>
